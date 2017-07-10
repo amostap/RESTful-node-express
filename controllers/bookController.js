@@ -15,7 +15,14 @@ const bookController = (Book) => {
       if (err) {
         res.status(500).send(err);
       } else {
-        res.json(books);
+        const returnBooks = [];
+        books.forEach((element, index, array) => {
+          const newBook = element.toJSON();
+          newBook.links = {};
+          newBook.links.self = `http://${req.headers.host}/api/books/${newBook._id}`
+          returnBooks.push(newBook);
+        });
+        res.json(returnBooks);
       }
     });
   };
@@ -34,7 +41,11 @@ const bookController = (Book) => {
   };
 
   const getBook = (req, res) => {
-    res.json(req.book);
+    const returnBook = req.book.toJSON();
+    returnBook.links = {};
+    const link = `http://${req.headers.host}/api/books/?genre=${returnBook.genre}`;
+    returnBook.links.FilterByThisGenre = link.replace(' ', '%20');
+    res.json(returnBook);
   };
 
   const putBook = (req, res) => {

@@ -1,0 +1,36 @@
+{
+  "name": "restful-node-express",
+  "version": "1.0.0",
+  "description": "RESTful-node-express-app",
+  "main": "app.js",
+  "scripts": {
+    "seed": "node seed.js",
+    "start": "gulp serve",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/amostap/RESTful-node-express.git"
+  },
+  "author": "amostap",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/amostap/RESTful-node-express/issues"
+  },
+  "homepage": "https://github.com/amostap/RESTful-node-express#readme",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "chalk": "^2.0.1",
+    "express": "^4.15.3",
+    "mongodb": "^2.2.30",
+    "mongoose": "^4.10.8",
+    "open": "^0.0.5"
+  },
+  "devDependencies": {
+    "eslint": "^3.19.0",
+    "eslint-config-airbnb-base": "^11.2.0",
+    "eslint-plugin-import": "^2.2.0",
+    "gulp": "^3.9.1",
+    "gulp-nodemon": "^2.2.1"
+  }
+}

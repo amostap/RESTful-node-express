@@ -20,20 +20,72 @@ const bookController = (Book) => {
     });
   };
 
-  const getBook = (req, res) => {
+  const findBookMiddleware = (req, res, next) => {
     Book.findById(req.params.bookId, (err, book) => {
       if (err) {
         res.status(500).send(err);
+      } else if (book) {
+        req.book = book;
+        next();
       } else {
-        res.json(book);
+        res.status(404).send('no book found');
+      }
+    });
+  };
+
+  const getBook = (req, res) => {
+    res.json(req.book);
+  };
+
+  const putBook = (req, res) => {
+    req.book.title = req.body.title;
+    req.book.author = req.body.author;
+    req.book.genre = req.body.genre;
+    req.book.read = req.body.read;
+    req.book.save((err) => {
+      if (err) {
+        res.status(500).send(err);
+      } else {
+        res.json(req.book);
+      }
+    });
+  };
+
+  const patchBook = (req, res) => {
+    if (req.body._id) {
+      delete req.body._id
+    }
+    for (const i in req.body) {
+      req.book[i] = req.body[i];
+    }
+
+    req.book.save((err) => {
+      if (err) {
+        res.status(500).send(err);
+      } else {
+        res.json(req.book);
+      }
+    });
+  };
+
+  const deleteBook = (req, res) => {
+    req.book.remove((err) => {
+      if (err) {
+        res.status(500).send(err);
+      } else {
+        res.sendStatus(204);
       }
     });
   };
 
   return {
+    deleteBook,
     getBooks,
     setBook,
     getBook,
+    putBook,
+    patchBook,
+    findBookMiddleware,
   };
 };
 

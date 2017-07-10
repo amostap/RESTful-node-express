@@ -8,8 +8,13 @@ const routes = (Book) => {
     .post(bookController.setBook)
     .get(bookController.getBooks);
 
+  bookRouter.use('/:bookId', bookController.findBookMiddleware);
+
   bookRouter.route('/:bookId')
-    .get(bookController.getBook);
+    .get(bookController.getBook)
+    .put(bookController.putBook)
+    .patch(bookController.patchBook)
+    .delete(bookController.deleteBook);
 
   return bookRouter;
 };
